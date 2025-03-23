@@ -5,6 +5,9 @@ from sklearn.cluster import DBSCAN
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
+# Set page config FIRST
+st.set_page_config(page_title="AI Deduplication Tool", layout="wide")
+
 @st.cache_resource
 def load_model():
     return SentenceTransformer('all-MiniLM-L6-v2')
@@ -24,7 +27,6 @@ def cluster_embeddings(embeddings, eps=0.15, min_samples=2):
     clustering = DBSCAN(eps=eps, min_samples=min_samples, metric='cosine').fit(embeddings)
     return clustering.labels_
 
-st.set_page_config(page_title="AI Deduplication Tool", layout="wide")
 st.title("🧠 AI-Powered Data Cleansing & Deduplication Tool")
 
 uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
